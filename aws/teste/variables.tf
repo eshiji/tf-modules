@@ -1,4 +1,4 @@
-variable "aws_local_profile" {}
+#variable "aws_local_profile" {}
 
 variable "aws_region" {}
 
