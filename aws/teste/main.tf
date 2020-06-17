@@ -1,6 +1,8 @@
 provider "aws" {
   #profile = var.local_profile
-  region  = var.aws_region
+  #region = var.aws_region
+  #access_key = "my-access-key"
+  #secret_key = "my-secret-key"
 }
 
 terraform {
