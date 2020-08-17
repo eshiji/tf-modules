@@ -40,10 +40,10 @@ terraform {
 #### Create a file to configure the backend properties on your project
 **e.g.:** s3_backend file
 ```
-bucket = "claro-terraform-tfstate-storage"
+bucket = "bucket-name-example"
 region = "us-east-1"
-key = "jenkins/prd/prd.tfstate"
-profile = "net-ongoing"
+key = "foo/env/env.tfstate"
+profile = "exmple-profile"
 dynamodb_table = "terraform-state-lock"
 ```
 
