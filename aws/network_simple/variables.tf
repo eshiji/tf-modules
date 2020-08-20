@@ -1,9 +1,10 @@
 # Default variables
 variable "project_name" {
+  type = string
 }
 
 variable "env" {
-  type = list(string)
+  type = string
 }
 
 variable "tags" {
@@ -15,24 +16,10 @@ variable "tags" {
 variable "vpc_cidr_block" {
 }
 
-
-variable "availability_zone" {
+variable "availability_zones" {
   type = list(string)
 }
 
-variable "subnet_priv_names" {
-  type = list(string)
+variable "subnet_newbits" {
+  type = string
 }
-
-variable "subnet_dmz_pub_names" {
-  type = list(string)
-}
-
-variable "subnet_lb_pub_names" {
-  type = list(string)
-}
-
-variable "subnet_db_priv_names" {
-  type = list(string)
-}
-

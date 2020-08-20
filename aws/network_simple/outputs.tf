@@ -7,10 +7,7 @@ output "private_subnets_ids" {
 }
 
 output "public_subnets_ids" {
-  value = concat(
-    aws_subnet.subnets_pub_lb.*.id,
-    aws_subnet.subnets_pub_dmz.*.id,
-  )
+  value = aws_subnet.public_subnets.*.id
 }
 
 output "rtb_pub1" {

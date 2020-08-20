@@ -7,7 +7,7 @@ resource "aws_vpc" "vpc" {
 
   tags = merge(
     {
-      "Name" = "VPC_${var.project_name}_${element(var.env, 0)}"
+      "Name" = "VPC_${var.project_name}_${var.env}"
     },
     var.tags,
   )
@@ -21,7 +21,7 @@ resource "aws_internet_gateway" "igw" {
 
   tags = merge(
     {
-      "Name" = "IGW_${var.project_name}_${element(var.env, 0)}"
+      "Name" = "IGW_${var.project_name}_${var.env}"
     },
     var.tags,
   )
@@ -42,7 +42,7 @@ resource "aws_eip" "eip_nat_gtw1" {
 
   tags = merge(
     {
-      "Name" = "EIP_NAT_GTW_${var.project_name}_${element(var.env, 1)}"
+      "Name" = "EIP_NAT_GTW_${var.project_name}_${var.env}"
     },
     var.tags,
   )
@@ -53,11 +53,11 @@ resource "aws_eip" "eip_nat_gtw1" {
 #################
 resource "aws_nat_gateway" "nat_gtw1" {
   allocation_id = aws_eip.eip_nat_gtw1.id
-  subnet_id     = element(aws_subnet.subnets_pub_dmz.*.id, 0)
+  subnet_id     = aws_subnet.public_subnets[0].id
 
   tags = merge(
     {
-      "Name" = "NAT_GTW_${var.project_name}_${element(var.env, 2)}"
+      "Name" = "NAT_GTW_${var.project_name}_${var.env}"
     },
     var.tags,
   )
@@ -71,7 +71,7 @@ resource "aws_eip" "eip_nat_gtw2" {
 
   tags = merge(
     {
-      "Name" = "EIP_NAT_GTW_${var.project_name}_${element(var.env, 2)}"
+      "Name" = "EIP_NAT_GTW_${var.project_name}_${var.env}"
     },
     var.tags,
   )
@@ -84,11 +84,11 @@ resource "aws_nat_gateway" "nat_gtw2" {
   allocation_id = aws_eip.eip_nat_gtw2.id
 
   #subnet_id     = "${aws_subnet.pub_ecare_all_dmz_sit_useast1a.id}"
-  subnet_id = element(aws_subnet.subnets_pub_dmz.*.id, 2)
+  subnet_id = aws_subnet.public_subnets[1].id
 
   tags = merge(
     {
-      "Name" = "NAT_GTW_${var.project_name}_${element(var.env, 2)}"
+      "Name" = "NAT_GTW_${var.project_name}_${var.env}"
     },
     var.tags,
   )
