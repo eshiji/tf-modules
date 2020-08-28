@@ -11,8 +11,7 @@ variable "tags" {
   type = map(string)
 }
 
-
-# VPC 
+# VPC
 variable "vpc_cidr_block" {
 }
 
