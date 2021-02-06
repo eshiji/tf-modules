@@ -73,7 +73,7 @@ resource "aws_launch_template" "launch_template" {
 
 # Instance Profile
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
-  name = "${var.project_name}-${var.env}"
+  name = "${var.project_name}-instance-profile-${var.env}"
   role = aws_iam_role.ec2_role.name
 }
 
