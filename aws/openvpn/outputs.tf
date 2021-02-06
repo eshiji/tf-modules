@@ -52,23 +52,23 @@ output "ec2_role_name" {
 
 # Security Group
 output "security_group_id" {
-  value = aws_security_group.allow_tls.id
+  value = aws_security_group.ec2_sg.id
 }
 
 output "security_group_name" {
-  value = aws_security_group.allow_tls.name
+  value = aws_security_group.ec2_sg.name
 }
 
 output "security_group_vpc_id" {
-  value = aws_security_group.allow_tls.vpc_id
+  value = aws_security_group.ec2_sg.vpc_id
 }
 
 output "security_group_ingress" {
-  value = aws_security_group.allow_tls.ingress
+  value = aws_security_group.ec2_sg.ingress
 }
 
 output "security_group_egress" {
-  value = aws_security_group.allow_tls.egress
+  value = aws_security_group.ec2_sg.egress
 }
 
 # Autoscaling Group (ASG)

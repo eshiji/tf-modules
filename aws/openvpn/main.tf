@@ -45,7 +45,7 @@ resource "aws_launch_template" "launch_template" {
   }
 
   iam_instance_profile {
-    name = aws_iam_instance_profile.launch_template_instance_profile
+    name = aws_iam_instance_profile.ec2_instance_profile
   }
 
   network_interfaces {
@@ -72,9 +72,9 @@ resource "aws_launch_template" "launch_template" {
 }
 
 # Instance Profile
-resource "aws_iam_instance_profile" "instance_profile" {
-  name = "test_profile"
-  role = aws_iam_role.role.name
+resource "aws_iam_instance_profile" "ec2_instance_profile" {
+  name = "${var.project_name}-${var.env}"
+  role = aws_iam_role.ec2_role.name
 }
 
 ################
@@ -101,7 +101,7 @@ data "aws_iam_policy_document" "instance_assume_role_policy" {
 }
 
 # Launch Template EC2 Secutiry Group
-resource "aws_security_group" "allow_tls" {
+resource "aws_security_group" "ec2_sg" {
   name        = "allow_tls"
   description = "Allow TLS inbound traffic"
   vpc_id      = var.vpc_id
