@@ -56,7 +56,7 @@ resource "aws_launch_template" "launch_template" {
   }
 
   monitoring {
-    enabled = var.launch_template__monitoring
+    enabled = var.launch_template_monitoring
   }
 
   tag_specifications {

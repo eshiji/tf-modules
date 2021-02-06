@@ -42,6 +42,8 @@ variable "launch_template_delete_eni_on_termination" {
 variable "launch_template_instance_type" {
   type = string
 }
+
+# ASG
 variable "asg_max_size" {
   type = number
 }
