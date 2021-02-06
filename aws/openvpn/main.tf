@@ -82,7 +82,7 @@ resource "aws_iam_instance_profile" "ec2_instance_profile" {
 ################
 resource "aws_iam_role" "ec2_role" {
   name               = "${var.project_name}-instance-profile-${var.env}"
-  path               = "/system/"
+  path               = "/"
   assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.json
 }
 
