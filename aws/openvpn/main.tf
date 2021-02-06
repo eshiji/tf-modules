@@ -114,6 +114,14 @@ resource "aws_security_group" "ec2_sg" {
     cidr_blocks = var.cidr_block_whitelist
   }
 
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = var.cidr_block_whitelist
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
