@@ -143,8 +143,8 @@ data "null_data_source" "asg_tags" {
   }
 }
 
-resource "aws_autoscaling_group" "asg_ecs_instances" {
-  name_prefix = "${var.project_name}-asg-ecs-instances-${var.env}"
+resource "aws_autoscaling_group" "asg" {
+  name_prefix = "${var.project_name}-asg-${var.env}"
 
   vpc_zone_identifier = var.public_subnet_ids
   max_size            = var.asg_max_size
