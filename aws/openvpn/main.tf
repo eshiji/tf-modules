@@ -156,8 +156,6 @@ resource "aws_autoscaling_group" "asg" {
     version = "$Latest"
   }
 
-  target_group_arns = [aws_alb_target_group.tg.arn]
-
   tags = concat(
     [
       {
