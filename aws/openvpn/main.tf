@@ -111,7 +111,7 @@ resource "aws_security_group" "ec2_sg" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [var.cidr_block_whitelist]
+    cidr_blocks = var.cidr_block_whitelist
   }
 
   egress {

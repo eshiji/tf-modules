@@ -18,23 +18,23 @@ output "launch_template_latest_version" {
 
 # Instance profile
 output "instance_profile_id" {
-  value = aws_iam_instance_profile.instance_profile.id
+  value = aws_iam_instance_profile.ec2_instance_profile.id
 }
 
 output "instance_profile_unique_id" {
-  value = aws_iam_instance_profile.instance_profile.unique_id
+  value = aws_iam_instance_profile.ec2_instance_profile.unique_id
 }
 
 output "instance_profile_path" {
-  value = aws_iam_instance_profile.instance_profile.path
+  value = aws_iam_instance_profile.ec2_instance_profile.path
 }
 
 output "instance_profile_name" {
-  value = aws_iam_instance_profile.instance_profile.name
+  value = aws_iam_instance_profile.ec2_instance_profile.name
 }
 
 output "instance_profile_role" {
-  value = aws_iam_instance_profile.instance_profile.role
+  value = aws_iam_instance_profile.ec2_instance_profile.role
 }
 
 # IAM Role
