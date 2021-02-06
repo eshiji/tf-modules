@@ -6,7 +6,7 @@ data "aws_ami" "ubuntu" {
 
   filter {
     name   = "name"
-    values = [ "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*" ]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
   }
 
   filter {
@@ -14,7 +14,7 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 
-  owners = [ "099720109477" ] # Canonical
+  owners = ["099720109477"] # Canonical
 }
 
 ###################
@@ -45,13 +45,13 @@ resource "aws_launch_template" "launch_template" {
   network_interfaces {
     associate_public_ip_address = var.launch_template_associate_public_ip_address
     delete_on_termination       = var.launch_template_delete_eni_on_termination
-    security_groups             = [ aws_security_group.ec2_sg.id ]
+    security_groups             = [aws_security_group.ec2_sg.id]
     description                 = "This ENI will be deleted on termination."
   }
 
-#   placement {
-#     availability_zone = var.availability_zone
-#   }
+  #   placement {
+  #     availability_zone = var.availability_zone
+  #   }
 
   tag_specifications {
     resource_type = "instance"
@@ -80,7 +80,7 @@ resource "aws_security_group" "ec2_sg" {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    security_groups = [ aws_security_group.alb_sg.id ] 
+    security_groups = [aws_security_group.alb_sg.id]
   }
 
   egress {
@@ -125,7 +125,7 @@ resource "aws_autoscaling_group" "asg_ecs_instances" {
     version = "$Latest"
   }
 
-  target_group_arns = [ aws_alb_target_group.tg.arn ]
+  target_group_arns = [aws_alb_target_group.tg.arn]
 
   tags = concat(
     [
@@ -146,7 +146,7 @@ resource "aws_lb" "alb" {
   name               = "${var.project_name}-alb-sg-${var.env}"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [ aws_security_group.alb_sg.id ]
+  security_groups    = [aws_security_group.alb_sg.id]
   subnets            = var.public_subnet_ids
 
   enable_deletion_protection = false
@@ -282,19 +282,19 @@ resource "aws_iam_policy" "systems_manager_policy" {
 #########################
 resource "aws_iam_policy_attachment" "policy_attach" {
   name       = "${var.project_name}-ec2-policy-attach-${var.env}"
-  roles      = [ aws_iam_role.ec2_role.name ]
+  roles      = [aws_iam_role.ec2_role.name]
   policy_arn = aws_iam_policy.ec2_policy.arn
 }
 
 resource "aws_iam_policy_attachment" "ssm_policy_attach" {
   name       = "${var.project_name}-ssm-policy-attach-${var.env}"
-  roles      = [ aws_iam_role.ec2_role.name ]
+  roles      = [aws_iam_role.ec2_role.name]
   policy_arn = aws_iam_policy.ssm_policy.arn
 }
 
 resource "aws_iam_policy_attachment" "systems_manager_policy_attach" {
   name       = "${var.project_name}-systems-manager-policy-attach-${var.env}"
-  roles      = [ aws_iam_role.ec2_role.name ]
+  roles      = [aws_iam_role.ec2_role.name]
   policy_arn = aws_iam_policy.systems_manager_policy.arn
 }
 

@@ -6,7 +6,7 @@ data "aws_ami" "ubuntu" {
 
   filter {
     name   = "name"
-    values = [ "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*" ]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
   }
 
   filter {
@@ -14,7 +14,7 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 
-  owners = [ "099720109477" ] # Canonical
+  owners = ["099720109477"] # Canonical
 }
 
 ###################
@@ -24,15 +24,15 @@ resource "aws_launch_template" "launch_template" {
   name = "${var.project_name}-${var.env}"
 
   image_id = data.aws_ami.ubuntu.id
-  
+
   key_name = var.launch_template_key_pair_name
 
   instance_initiated_shutdown_behavior = "stop"
-  
+
   instance_type = var.launch_template_instance_type
-  
+
   disable_api_termination = var.launch_template_termination_protection
-  
+
   user_data = filebase64("${path.module}/user_data.sh")
 
   block_device_mappings {
@@ -51,7 +51,7 @@ resource "aws_launch_template" "launch_template" {
   network_interfaces {
     associate_public_ip_address = var.launch_template_associate_public_ip_address
     delete_on_termination       = var.launch_template_delete_eni_on_termination
-    security_groups             = [ aws_security_group.ec2_sg.id ]
+    security_groups             = [aws_security_group.ec2_sg.id]
     description                 = "This ENI will be deleted on termination."
   }
 
@@ -111,19 +111,19 @@ resource "aws_security_group" "allow_tls" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [ var.cidr_block_whitelist ]
+    cidr_blocks = [var.cidr_block_whitelist]
   }
 
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = "-1" 
-    cidr_blocks = [ "0.0.0.0/0" ]
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = merge(
     {
-        Name = "${var.project_name}"
+      Name = "${var.project_name}"
     },
     var.tags
   )
@@ -156,7 +156,7 @@ resource "aws_autoscaling_group" "asg_ecs_instances" {
     version = "$Latest"
   }
 
-  target_group_arns = [ aws_alb_target_group.tg.arn ]
+  target_group_arns = [aws_alb_target_group.tg.arn]
 
   tags = concat(
     [

@@ -16,12 +16,17 @@ variable "launch_template_ebs_size" {
   default = 8
 }
 variable "launch_template_device_name" {
-  type = string
+  type    = string
   default = "/dev/sda1"
 }
 
+variable "launch_template_monitoring" {
+  type    = bool
+  default = false
+}
+
 variable "launch_template_termination_protection" {
-  type = bool
+  type    = bool
   default = false
 }
 
@@ -33,20 +38,18 @@ variable "launch_template_delete_eni_on_termination" {
   type    = bool
   default = true
 }
-variable "cidr_block_whitelist" {
-  type = list(string)
-}
+
 variable "launch_template_instance_type" {
-    type = string
+  type = string
 }
 variable "asg_max_size" {
-    type = number
+  type = number
 }
 variable "asg_min_size" {
-    type = number
+  type = number
 }
 variable "asg_desired_capacity" {
-    type = number
+  type = number
 }
 
 # Network
@@ -54,5 +57,8 @@ variable "vpc_id" {
   type = string
 }
 variable "public_subnet_ids" {
+  type = list(string)
+}
+variable "cidr_block_whitelist" {
   type = list(string)
 }

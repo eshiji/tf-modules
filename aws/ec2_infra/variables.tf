@@ -33,16 +33,16 @@ variable "cidr_block_whitelist" {
   type = list(string)
 }
 variable "instance_type" {
-    type = string
+  type = string
 }
 variable "asg_max_size" {
-    type = number
+  type = number
 }
 variable "asg_min_size" {
-    type = number
+  type = number
 }
 variable "asg_desired_capacity" {
-    type = number
+  type = number
 }
 
 # Network
