@@ -43,6 +43,10 @@ variable "launch_template_instance_type" {
   type = string
 }
 
+variable "launch_template_key_pair_name" {
+    type = string
+}
+
 # ASG
 variable "asg_max_size" {
   type = number
