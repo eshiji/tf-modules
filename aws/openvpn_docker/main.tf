@@ -108,8 +108,8 @@ resource "aws_security_group" "ec2_sg" {
 
   ingress {
     description = "TLS from VPC"
-    from_port   = 443
-    to_port     = 443
+    from_port   = 1194
+    to_port     = 1194
     protocol    = "tcp"
     cidr_blocks = var.cidr_block_whitelist
   }
