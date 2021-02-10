@@ -44,7 +44,7 @@ variable "launch_template_instance_type" {
 }
 
 variable "launch_template_key_pair_name" {
-    type = string
+  type = string
 }
 
 # ASG

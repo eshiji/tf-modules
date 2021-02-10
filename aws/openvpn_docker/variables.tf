@@ -9,6 +9,9 @@ variable "env" {
 variable "tags" {
   type = map(string)
 }
+variable "ovpn_files_bucket_name" {
+  type = string
+}
 
 # Launch template and ASG
 variable "launch_template_ebs_size" {

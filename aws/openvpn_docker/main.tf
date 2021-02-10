@@ -33,7 +33,8 @@ resource "aws_launch_template" "launch_template" {
 
   disable_api_termination = var.launch_template_termination_protection
 
-  user_data = filebase64("${path.module}/user_data.sh")
+  # user_data = filebase64("${path.module}/user_data.sh")
+  user_data = filebase64(templatefile("${path.module}/user_data.sh", {bucket_name = aws_s3_bucket.ovpn_files_bucket.id, iam_role_name = aws_iam_role.ec2_role.name }))
 
   block_device_mappings {
     device_name = var.launch_template_device_name
@@ -68,35 +69,6 @@ resource "aws_launch_template" "launch_template" {
       },
       var.tags,
     )
-  }
-}
-
-# Instance Profile
-resource "aws_iam_instance_profile" "ec2_instance_profile" {
-  name = "${var.project_name}-instance-profile-${var.env}"
-  role = aws_iam_role.ec2_role.name
-}
-
-################
-# EC2 IAM Role #
-################
-resource "aws_iam_role" "ec2_role" {
-  name               = "${var.project_name}-instance-profile-${var.env}"
-  path               = "/"
-  assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.json
-}
-
-##############
-# IAM policy #
-##############
-data "aws_iam_policy_document" "instance_assume_role_policy" {
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
-    }
   }
 }
 
@@ -176,3 +148,66 @@ resource "aws_autoscaling_group" "asg" {
   )
 }
 
+
+# Instance Profile
+resource "aws_iam_instance_profile" "ec2_instance_profile" {
+  name = "${var.project_name}-instance-profile-${var.env}"
+  role = aws_iam_role.ec2_role.name
+}
+
+################
+# EC2 IAM Role #
+################
+resource "aws_iam_role" "ec2_role" {
+  name               = "${var.project_name}-instance-profile-${var.env}"
+  path               = "/"
+  assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.json
+}
+
+##############
+# IAM policy #
+##############
+data "aws_iam_policy_document" "instance_assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_policy" "s3fs_policy" {
+  name        = "${var.project_name}-s3fs-policy-${var.env}"
+  path        = "/"
+  description = "Permissions for s3fs"
+
+  policy = templatefile("${path.module}/s3fs.json", { bucket_name = aws_s3_bucket.ovpn_files_bucket.id })
+}
+
+#########################
+# IAM Policy Attachment #
+#########################
+resource "aws_iam_policy_attachment" "policy_attach" {
+  name       = "${var.project_name}-s3fs-attach-${var.env}"
+  roles      = [aws_iam_role.ec2_role.name]
+  policy_arn = aws_iam_policy.s3fs_policy.policy_arn
+}
+
+# Create bucket for ovpn files
+resource "aws_s3_bucket" "ovpn_files_bucket" {
+  bucket = var.ovpn_files_bucket_name
+  acl    = "private"
+
+  versioning {
+    enabled = true
+  }
+
+  tags = merge(
+    {
+      "Name" = "${var.env}-${var.project_name}-ovpn-files"
+    },
+    var.tags,
+  )
+}
