@@ -1,11 +1,7 @@
 #!/bin/bash
 
 apt update -y
-
-# Configure openvpn user
-adduser openvpn
-usermod -aG sudo openvpn
-echo  -e 'openvpn\tALL=(ALL)\tNOPASSWD:\tALL' > /etc/sudoers.d/openvpn
+apt install -y acl
 
 # Install docker
 apt install -y apt-transport-https ca-certificates curl software-properties-common
@@ -15,9 +11,12 @@ apt update -y
 apt-cache policy docker-ce
 apt install -y docker-ce
 systemctl enable docker
+pip3 install docker
 
 # Configure openvpn user
 adduser openvpn
 usermod -aG sudo openvpn
 usermod -aG docker openvpn
 echo  -e 'openvpn\tALL=(ALL)\tNOPASSWD:\tALL' > /etc/sudoers.d/openvpn
+
+pip3 install docker
