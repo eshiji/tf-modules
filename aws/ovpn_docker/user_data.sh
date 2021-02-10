@@ -1,7 +1,7 @@
 #!/bin/bash
 
 apt update -y
-apt install -y acl s3fs
+apt install -y acl s3fs python3-pip
 
 # Install docker
 apt install -y apt-transport-https ca-certificates curl software-properties-common
