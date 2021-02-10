@@ -192,7 +192,7 @@ resource "aws_iam_policy" "s3fs_policy" {
 resource "aws_iam_policy_attachment" "policy_attach" {
   name       = "${var.project_name}-s3fs-attach-${var.env}"
   roles      = [aws_iam_role.ec2_role.name]
-  policy_arn = aws_iam_policy.s3fs_policy.policy_arn
+  policy_arn = aws_iam_policy.s3fs_policy.arn
 }
 
 # Create bucket for ovpn files
