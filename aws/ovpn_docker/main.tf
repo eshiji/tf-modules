@@ -20,7 +20,7 @@ data "aws_ami" "ubuntu" {
 data "template_file" "user_data" {
   template = file("${path.module}/user_data.sh")
 
-  var = {
+  vars = {
     bucket_name = aws_s3_bucket.ovpn_files_bucket.id
     iam_role_name = aws_iam_role.ec2_role.name
     user = ovpn
