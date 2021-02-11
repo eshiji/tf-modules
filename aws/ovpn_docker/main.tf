@@ -17,6 +17,16 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+data "template_file" "user_data" {
+  template = file("${path.module}/user_data.sh")
+
+  var = {
+    bucket_name = aws_s3_bucket.ovpn_files_bucket.id
+    iam_role_name = aws_iam_role.ec2_role.name
+    user = ovpn
+  }
+}
+
 ###################
 # Launch template #
 ###################
@@ -34,7 +44,7 @@ resource "aws_launch_template" "launch_template" {
   disable_api_termination = var.launch_template_termination_protection
 
   # user_data = filebase64("${path.module}/user_data.sh")
-  user_data = base64encode(templatefile("${path.module}/user_data.sh", {bucket_name = aws_s3_bucket.ovpn_files_bucket.id, iam_role_name = aws_iam_role.ec2_role.name }))
+  user_data = base64encode(data.template_file.user_data.rendered)
 
   block_device_mappings {
     device_name = var.launch_template_device_name

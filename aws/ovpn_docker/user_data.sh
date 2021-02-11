@@ -13,12 +13,14 @@ apt install -y docker-ce
 systemctl enable docker
 pip3 install docker
 
-# Configure openvpn user
-adduser openvpn
-usermod -aG sudo openvpn
-usermod -aG docker openvpn
-echo  -e 'openvpn\tALL=(ALL)\tNOPASSWD:\tALL' > /etc/sudoers.d/openvpn
+# Configure "${user}"
+adduser ${user}
+usermod -aG sudo ${user}
+usermod -aG docker ${user}
+echo  -e '${user}\tALL=(ALL)\tNOPASSWD:\tALL' > /etc/sudoers.d/${user}
+mkdir -p /home/${user}/${user}-files
+chown -R ${user}.${user} /home/${user}/${user}-files
 
 # Mount s3fs
-/usr/local/bin/s3fs ${bucket_name} -o use_cache=/tmp,iam_role=${iam_role_name},uid=1000,gid=1000,allow_other /etc/openvpn
+/usr/bin/s3fs ${bucket_name} -o use_cache=/tmp,iam_role=${iam_role_name},uid=1000,gid=1000,allow_other /home/${user}-files/
 
