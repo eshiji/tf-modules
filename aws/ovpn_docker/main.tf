@@ -23,7 +23,7 @@ data "template_file" "user_data" {
   vars = {
     bucket_name = aws_s3_bucket.ovpn_files_bucket.id
     iam_role_name = aws_iam_role.ec2_role.name
-    user = ovpn
+    user = "ovpn"
   }
 }
 
