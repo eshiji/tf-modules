@@ -22,6 +22,7 @@ mkdir -p /home/${user}/${user}-files
 chown -R ${user}.${user} /home/${user}
 
 # Mount s3fs
-/usr/bin/s3fs ${bucket_name} -o use_cache=/tmp,iam_role=${iam_role_name},uid=1000,gid=1000,allow_other /home/${user}/${user}-files/
- echo ${bucket_name} /home/${user}/${user}-files/ fuse.s3fs _netdev,allow_other 0 0 >> /etc/fstab
+echo ${bucket_name} /home/${user}/${user}-files/ fuse.s3fs _netdev,uid=$(id -u ${user}),gid=$(id -g ${user}),allow_other,iam_role=${iam_role_name} 0 0 >> /etc/fstab
+/usr/bin/s3fs ovpn-files-giga-test -o use_cache=/tmp,iam_role=${iam_role_name} /home/${user}/${user}-files/
+
 
