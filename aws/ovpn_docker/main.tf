@@ -100,7 +100,7 @@ resource "aws_security_group" "ec2_sg" {
     description = "SSH"
     from_port   = 22
     to_port     = 22
-    protocol    = "udp"
+    protocol    = "tcp"
     cidr_blocks = var.cidr_block_whitelist
   }
 
