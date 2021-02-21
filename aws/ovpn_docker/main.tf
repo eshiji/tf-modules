@@ -92,7 +92,7 @@ resource "aws_security_group" "ec2_sg" {
     description = "TLS from VPC"
     from_port   = 1194
     to_port     = 1194
-    protocol    = "tcp"
+    protocol    = "udp"
     cidr_blocks = var.cidr_block_whitelist
   }
 
@@ -100,7 +100,7 @@ resource "aws_security_group" "ec2_sg" {
     description = "SSH"
     from_port   = 22
     to_port     = 22
-    protocol    = "tcp"
+    protocol    = "udp"
     cidr_blocks = var.cidr_block_whitelist
   }
 
