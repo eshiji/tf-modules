@@ -19,7 +19,6 @@ Content-Disposition: attachment; filename="userdata.txt"
 
 #!/bin/bash
 
-cloud-init status --wait
 apt update -y
 apt install -y acl s3fs python3-pip
 

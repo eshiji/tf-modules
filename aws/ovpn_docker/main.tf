@@ -43,6 +43,8 @@ resource "aws_launch_template" "launch_template" {
 
   disable_api_termination = var.launch_template_termination_protection
 
+  update_default_version = true
+
   # user_data = filebase64("${path.module}/user_data.sh")
   user_data = base64encode(data.template_file.user_data.rendered)
 
