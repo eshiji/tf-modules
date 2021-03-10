@@ -150,11 +150,14 @@ resource "aws_instance" "ovpn_instance" {
   instance_type          = var.instance_type
   user_data              = base64encode(data.template_file.user_data.rendered)
   iam_instance_profile   = aws_iam_instance_profile.ec2_instance_profile.name
-  delete_on_termination  = false
   subnet_id              = var.public_subnet_id
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
   key_name               = var.ec2_key_name
 
+  root_block_device {
+    delete_on_termination  = false
+  }
+  
   tags = merge(
     {
       "Name" = "${var.env}-${var.project_name}-instance"
