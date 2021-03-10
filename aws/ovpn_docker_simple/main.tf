@@ -133,7 +133,6 @@ resource "aws_s3_bucket" "ovpn_files_bucket" {
 resource "aws_eip" "instance_eip" {
   vpc             = true
   instance        = aws_instance.ovpn_instance.id
-  security_groups = [aws_aws_security_group.ec2_sg.id]
 
   tags = merge(
     {
@@ -157,7 +156,7 @@ resource "aws_instance" "ovpn_instance" {
   root_block_device {
     delete_on_termination  = false
   }
-  
+
   tags = merge(
     {
       "Name" = "${var.env}-${var.project_name}-instance"
