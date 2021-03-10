@@ -38,12 +38,17 @@ variable "public_subnet_id" {
   description = "Subnet id to attach."
 }
 
-# Route53
-variable "zone_id"{
+variable "ec2_key_name"{
   type = string
+  description = "EC2 key pair name for ssh"
+}
+
+# Route53
+variable "zone_id" {
+  type        = string
   description = "Zone ID to create the record"
 }
 variable "domain_name" {
-  type = string
+  type        = string
   description = "Domain name"
 }

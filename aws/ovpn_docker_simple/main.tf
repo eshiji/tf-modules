@@ -153,6 +153,7 @@ resource "aws_instance" "ovpn_instance" {
   delete_on_termination  = false
   subnet_id              = var.public_subnet_id
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
+  key_name               = var.ec2_key_name
 
   tags = merge(
     {
