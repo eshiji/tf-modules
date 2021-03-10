@@ -17,9 +17,6 @@ variable "ovpn_files_bucket_name" {
 variable "vpc_id" {
   type = string
 }
-variable "public_subnet_ids" {
-  type = list(string)
-}
 variable "cidr_block_ssh_whitelist" {
   type = list(string)
 }
@@ -36,7 +33,7 @@ variable "ovpn_user" {
   type        = string
   description = "User for openvpn created on user data"
 }
-variable "subnet_id" {
+variable "public_subnet_id" {
   type        = string
   description = "Subnet id to attach."
 }
